@@ -13,11 +13,20 @@ NOT_BEFORE=`date -v+2d +"%F-%H:%M"`
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
-[[ -f next-orders.txt ]] && echo "File found" || touch next-orders.txt
+[[ -f next-orders.txt ]] && echo "File for next orders found" || touch next-orders.txt
+[[ -f sent-orders.txt ]] && echo "File for sent orders found" || touch sent-orders.txt
 
 if [[ `tail -1 next-orders.txt` < $CURRENT_DATE ]];then
-	echo "Can order"
-	echo "\n$NOT_BEFORE" > next-orders.txt
+	curl -H "Authorization: Bearer changeit" \
+		-X POST \
+		"https://hooks.zapier.com/hooks/catch/3005275/o28kvwa/" \
+		--data "order-date=${CURRENT_DATE}"
+	if [[ $? == 0 ]];then
+		echo "\n$NOT_BEFORE" > next-orders.txt
+		echo "\n$CURRENT_DATE" > sent-orders.txt
+	else
+		echo "Something went wrong!"
+	fi
 else
 	echo "Don't!!"
 fi
