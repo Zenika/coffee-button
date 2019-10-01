@@ -17,6 +17,7 @@ echo "Don't order before: ${NOT_BEFORE}"
 
 if [[ `tail -1 next-orders.txt` < $CURRENT_DATE ]];then
 	echo "Can order"
+	echo "\n$NOT_BEFORE" > next-orders.txt
 else
 	echo "Don't!!"
 fi
