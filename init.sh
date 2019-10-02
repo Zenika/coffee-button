@@ -11,6 +11,8 @@ source ./.env
 CURRENT_DATE=`date +"%F-%H:%M"`
 NOT_BEFORE=`date -v+2d +"%F-%H:%M"`
 
+python led_boot.py
+
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
@@ -25,10 +27,11 @@ if [[ `tail -1 next-orders.cb` < $CURRENT_DATE ]];then
 	if [[ $? == 0 ]];then
 		echo "\n$NOT_BEFORE" > next-orders.cb
 		echo "\n$CURRENT_DATE" > sent-orders.cb
+		python led_ok.py
 	else
 		echo "Something went wrong!"
+		python led_ko.py
 	fi
 else
 	echo "Don't!!"
 fi
-
