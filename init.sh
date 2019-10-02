@@ -27,11 +27,15 @@ if [[ `tail -1 next-orders.cb` < $CURRENT_DATE ]];then
 	if [[ $? == 0 ]];then
 		echo "\n$NOT_BEFORE" > next-orders.cb
 		echo "\n$CURRENT_DATE" > sent-orders.cb
+		echo "Command sent"
 		python led_ok.py
 	else
 		echo "Something went wrong!"
 		python led_ko.py
 	fi
 else
-	echo "Don't!!"
+	echo "Order already placed"
+	python led_ok.py
 fi
+
+sudo power off
