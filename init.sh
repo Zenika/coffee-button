@@ -14,17 +14,17 @@ NOT_BEFORE=`date -v+2d +"%F-%H:%M"`
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
-[[ -f next-orders.txt ]] && echo "File for next orders found" || touch next-orders.txt
-[[ -f sent-orders.txt ]] && echo "File for sent orders found" || touch sent-orders.txt
+[[ -f next-orders.cb ]] && echo "File for next orders found" || touch next-orders.cb
+[[ -f sent-orders.cb ]] && echo "File for sent orders found" || touch sent-orders.cb
 
-if [[ `tail -1 next-orders.txt` < $CURRENT_DATE ]];then
+if [[ `tail -1 next-orders.cb` < $CURRENT_DATE ]];then
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
 		-X POST \
 		"${WEBHOOK_URL}" \
 		--data "order-date=${CURRENT_DATE}"
 	if [[ $? == 0 ]];then
-		echo "\n$NOT_BEFORE" > next-orders.txt
-		echo "\n$CURRENT_DATE" > sent-orders.txt
+		echo "\n$NOT_BEFORE" > next-orders.cb
+		echo "\n$CURRENT_DATE" > sent-orders.cb
 	else
 		echo "Something went wrong!"
 	fi
