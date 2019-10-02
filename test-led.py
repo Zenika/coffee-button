@@ -13,6 +13,6 @@ print "Green LED on"
 print "Red LED off"
 GPIO.output(18,GPIO.LOW)
 GPIO.output(12,GPIO.HIGH)
-
+time.sleep(1)
 print "Green LED off"
 GPIO.output(12,GPIO.LOW)
