@@ -7,6 +7,8 @@ Feel free to contribute!
 
 ## Things to do:
 
- - [ ] write the script
- - [ ] create the Zappier endpoint
- - [ ] try it!
+ - [X] write the script
+ - [X] create the Zappier endpoint
+ - [X] try it!
+ - [ ] add leds?
+ - [ ] add Slack notifications
