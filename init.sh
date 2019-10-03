@@ -28,7 +28,7 @@ if [[ $(tail -1 next-orders.cb) < $CURRENT_DATE ]];then
 	if [[ $? == 0 ]];then
 		printf "\n$NOT_BEFORE" > next-orders.cb
 		printf "\n$CURRENT_DATE" > sent-orders.cb
-		echo "$(date) -- Command sent\n" > logfile.log
+		echo "$(date) -- Command sent\n" >> logfile.log
 		python $(SCRIPTPATH)/led_ok.py
 	else
 		echo "$(date) -- Something went wrong!" >> logfile.log
