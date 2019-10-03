@@ -39,4 +39,4 @@ else
 	python ${SCRIPTPATH}/led_ok.py
 fi
 
-sudo power off
+sudo poweroff
