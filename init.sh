@@ -16,9 +16,12 @@ python ${SCRIPTPATH}/led_boot.py
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
-[[ -f next-orders.cb ]] && echo "File for next orders found" || touch next-orders.cb
-[[ -f sent-orders.cb ]] && echo "File for sent orders found" || touch sent-orders.cb
-[[ -f logfile.log ]] && echo "Logs file found" || touch logfile.log
+[[ -f next-orders.cb ]] && echo "File for next orders found" \
+	|| touch next-orders.cb && echo "File for next orders created"
+[[ -f sent-orders.cb ]] && echo "File for sent orders found" \
+	|| touch sent-orders.cb && echo "File for sent orders created"
+[[ -f logfile.log ]] && echo "Logs file found" \
+	|| touch logfile.log && echo "Log file created"
 
 if [[ $(tail -1 next-orders.cb) < $CURRENT_DATE ]];then
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
@@ -39,4 +42,5 @@ else
 	python ${SCRIPTPATH}/led_ok.py
 fi
 
-sudo poweroff
+#sudo poweroff
+
