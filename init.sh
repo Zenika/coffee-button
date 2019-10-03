@@ -18,7 +18,7 @@ echo "Don't order before: ${NOT_BEFORE}"
 
 [[ -d /etc/coffee-button ]] && echo "Directory exists" \
 	|| mkdir -p /etc/coffee-button && echo "Directory created"
-FILE_DIR=/etc/coffee-button
+FILE_DIR="/etc/coffee-button"
 [[ -f ${FILE_DIR}/next-orders.cb ]] && echo "File for next orders found" \
 	|| touch ${FILE_DIR}/next-orders.cb && echo "File for next orders created"
 [[ -f ${FILE_DIR}/sent-orders.cb ]] && echo "File for sent orders found" \
