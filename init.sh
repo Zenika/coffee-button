@@ -6,12 +6,12 @@
 # - this request contains an Authorization header and the current date
 # - it then needs to shutdown the device
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-source $(SCRIPTPATH)/.env
+source ${SCRIPTPATH}/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
-NOT_BEFORE=$(date -v+2d +"%F-%H:%M")
+NOT_BEFORE=$(date -d +2d +"%F-%H:%M")
 
-python $(SCRIPTPATH)/led_boot.py
+python ${SCRIPTPATH}/led_boot.py
 
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
@@ -29,14 +29,14 @@ if [[ $(tail -1 next-orders.cb) < $CURRENT_DATE ]];then
 		printf "\n$NOT_BEFORE" > next-orders.cb
 		printf "\n$CURRENT_DATE" > sent-orders.cb
 		echo "$(date) -- Command sent\n" >> logfile.log
-		python $(SCRIPTPATH)/led_ok.py
+		python ${SCRIPTPATH}/led_ok.py
 	else
 		echo "$(date) -- Something went wrong!" >> logfile.log
-		python $(SCRIPTPATH)/led_ko.py
+		python ${SCRIPTPATH}/led_ko.py
 	fi
 else
 	echo "$(date) -- Order already placed" >> logfile.log
-	python $(SCRIPTPATH)/led_ok.py
+	python ${SCRIPTPATH}/led_ok.py
 fi
 
 sudo power off
