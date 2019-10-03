@@ -18,7 +18,7 @@ echo "Don't order before: ${NOT_BEFORE}"
 
 [[ -f next-orders.cb ]] && echo "File for next orders found" || touch next-orders.cb
 [[ -f sent-orders.cb ]] && echo "File for sent orders found" || touch sent-orders.cb
-[[ -f logfile.txt ]] && echo "Logs file found" || touch logfile.txt
+[[ -f logfile.log ]] && echo "Logs file found" || touch logfile.log
 
 if [[ `tail -1 next-orders.cb` < $CURRENT_DATE ]];then
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
@@ -28,14 +28,14 @@ if [[ `tail -1 next-orders.cb` < $CURRENT_DATE ]];then
 	if [[ $? == 0 ]];then
 		echo "\n$NOT_BEFORE" > next-orders.cb
 		echo "\n$CURRENT_DATE" > sent-orders.cb
-		echo "`date` -- Command sent\n" > logfile.txt
+		echo "`date` -- Command sent\n" > logfile.log
 		python led_ok.py
 	else
-		echo "`date` -- Something went wrong!" > logfile.txt
+		echo "`date` -- Something went wrong!" > logfile.log
 		python led_ko.py
 	fi
 else
-	echo "`date` -- Order already placed" > logfile.txt
+	echo "`date` -- Order already placed" > logfile.log
 	python led_ok.py
 fi
 
