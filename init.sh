@@ -5,7 +5,7 @@
 # - if more than 48h as passed since last use, send a POST request using curl to Zappier URL
 # - this request contains an Authorization header and the current date
 # - it then needs to shutdown the device
-SCRIPTPATH=“$( cd “$( dirname “${BASH_SOURCE[0]}” )” >/dev/null && pwd )”
+SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source $(SCRIPTPATH)/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
