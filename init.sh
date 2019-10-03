@@ -9,7 +9,7 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source ${SCRIPTPATH}/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
-NOT_BEFORE=$(date -d +2d +"%F-%H:%M")
+NOT_BEFORE=$(date -d "+2 days" +"%F-%H:%M")
 
 python ${SCRIPTPATH}/led_boot.py
 
