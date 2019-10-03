@@ -5,12 +5,13 @@
 # - if more than 48h as passed since last use, send a POST request using curl to Zappier URL
 # - this request contains an Authorization header and the current date
 # - it then needs to shutdown the device
-source ./.env
+SCRIPTPATH=“$( cd “$( dirname “${BASH_SOURCE[0]}” )” >/dev/null && pwd )”
+source $(SCRIPTPATH)/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
 NOT_BEFORE=$(date -v+2d +"%F-%H:%M")
 
-python led_boot.py
+python $(SCRIPTPATH)/led_boot.py
 
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
@@ -27,15 +28,15 @@ if [[ $(tail -1 next-orders.cb) < $CURRENT_DATE ]];then
 	if [[ $? == 0 ]];then
 		printf "\n$NOT_BEFORE" > next-orders.cb
 		printf "\n$CURRENT_DATE" > sent-orders.cb
-		printf "$(date) -- Command sent\n" > logfile.log
-		python led_ok.py
+		echo "$(date) -- Command sent\n" > logfile.log
+		python $(SCRIPTPATH)/led_ok.py
 	else
-		printf "$(date) -- Something went wrong!" > logfile.log
-		python led_ko.py
+		echo "$(date) -- Something went wrong!" >> logfile.log
+		python $(SCRIPTPATH)/led_ko.py
 	fi
 else
-	printf "$(date) -- Order already placed" > logfile.log
-	python led_ok.py
+	echo "$(date) -- Order already placed" >> logfile.log
+	python $(SCRIPTPATH)/led_ok.py
 fi
 
 sudo power off
