@@ -6,7 +6,10 @@
 # - this request contains an Authorization header and the current date
 # - it then needs to shutdown the device
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-source ${SCRIPTPATH}/.env
+[[ -d /etc/coffee-button ]] && echo "Directory exists" \
+	|| mkdir -p /etc/coffee-button && echo "Directory created"
+FILE_DIR="/etc/coffee-button"
+source ${FILE_PATH}/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
 NOT_BEFORE=$(date -d "+2 days" +"%F-%H:%M")
@@ -16,9 +19,6 @@ python ${SCRIPTPATH}/led_boot.py
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
-[[ -d /etc/coffee-button ]] && echo "Directory exists" \
-	|| mkdir -p /etc/coffee-button && echo "Directory created"
-FILE_DIR="/etc/coffee-button"
 [[ -f ${FILE_DIR}/next-orders.cb ]] && echo "File for next orders found" \
 	|| touch ${FILE_DIR}/next-orders.cb && echo "File for next orders created"
 [[ -f ${FILE_DIR}/sent-orders.cb ]] && echo "File for sent orders found" \
