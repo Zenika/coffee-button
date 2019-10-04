@@ -9,6 +9,8 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 [[ -d /etc/coffee-button ]] && echo "Directory exists" \
 	|| (mkdir -p /etc/coffee-button && echo "Directory created")
 FILE_DIR="/etc/coffee-button"
+[[ -f ${FILE_DIR}/.env ]] && "Env file found" \
+	|| (cp /coffe-button/.env ${FILE_DIR} && "Env file copied from last commit")
 source ${FILE_DIR}/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
