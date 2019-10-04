@@ -8,12 +8,13 @@
 > Order your coffee in one click or everything else  
 > Click the button, the raspberry boot, call your webhook then shutdown
 
+## Prototype
+
+![Prototype](images/prototype.png "Prototype")
+
 ## Install
 
-```
-Add a line to call the init.sh file from your boot
-/etc/rc.local on raspbian lite
-```
+Add a line to call the `init.sh` file from your boot `/etc/rc.local` on raspbian lite
 
 ## Usage
 
@@ -44,3 +45,4 @@ This project is [GPL 3](https://www.gnu.org/licenses/gpl-3.0.html) licensed.
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+
