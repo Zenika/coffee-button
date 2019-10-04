@@ -9,7 +9,7 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 [[ -d /etc/coffee-button ]] && echo "Directory exists" \
 	|| mkdir -p /etc/coffee-button && echo "Directory created"
 FILE_DIR="/etc/coffee-button"
-source ${FILE_PATH}/.env
+source ${FILE_DIR}/.env
 
 CURRENT_DATE=$(date +"%F-%H:%M")
 NOT_BEFORE=$(date -d "+2 days" +"%F-%H:%M")
