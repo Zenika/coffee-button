@@ -45,5 +45,5 @@ else
 	python ${SCRIPTPATH}/led_ok.py
 fi
 
-#sudo poweroff
+sudo poweroff
 
