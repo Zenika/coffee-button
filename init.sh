@@ -7,7 +7,7 @@
 # - it then needs to shutdown the device
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 [[ -d /etc/coffee-button ]] && echo "Directory exists" \
-	|| mkdir -p /etc/coffee-button && echo "Directory created"
+	|| (mkdir -p /etc/coffee-button && echo "Directory created")
 FILE_DIR="/etc/coffee-button"
 source ${FILE_DIR}/.env
 
@@ -20,11 +20,11 @@ echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
 [[ -f ${FILE_DIR}/next-orders.cb ]] && echo "File for next orders found" \
-	|| touch ${FILE_DIR}/next-orders.cb && echo "File for next orders created"
+	|| (touch ${FILE_DIR}/next-orders.cb && echo "File for next orders created")
 [[ -f ${FILE_DIR}/sent-orders.cb ]] && echo "File for sent orders found" \
-	|| touch ${FILE_DIR}/sent-orders.cb && echo "File for sent orders created"
+	|| (touch ${FILE_DIR}/sent-orders.cb && echo "File for sent orders created")
 [[ -f ${FILE_DIR}/logfile.log ]] && echo "Logs file found" \
-	|| touch ${FILE_DIR}/logfile.log && echo "Log file created"
+	|| (touch ${FILE_DIR}/logfile.log && echo "Log file created")
 
 if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE ]];then
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
