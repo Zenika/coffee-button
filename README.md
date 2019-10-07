@@ -14,6 +14,22 @@
 
 ## Install
 
+### What you need to run the project
+
+ - a Raspberry Pi with Wifi, or ethernet connection if you like cables
+ - an SD card
+ - 2 leds with 330Ω resitors and cables
+ - a push button with cables
+ - optionnaly a breadboard, to check the connections before soldering the elements
+
+### How to build
+
+Connect the push button on pins 5 & 6 _(SCL & Ground)_, so the click will wake it.
+Connect the green led and a resitor on pins 32 & 34 _(PWM0 & Ground)_.
+Connect the red led and the other resistor on pins 12 & 14 -(PWM0 & Ground)_.
+
+![GPIO connectors](images/Raspberry-GPIO-Pinout.png "GPIO connectors")
+
 Add a line to call the `init.sh` file from your boot `/etc/rc.local` on raspbian lite
 
 ## Usage
