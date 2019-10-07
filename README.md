@@ -22,23 +22,31 @@
  - a push button with cables
  - optionnaly a breadboard, to check the connections before soldering the elements
 
+![LED](images/Red_LED.png "Red LED example")
+![Resistor](images/330OhmResistor.png "330Ω Resistor")
+
 ### How to build
 
-Connect the push button on pins 5 & 6 _(SCL & Ground)_, so the click will wake it.
-Connect the green led and a resitor on pins 32 & 34 _(PWM0 & Ground)_.
-Connect the red led and the other resistor on pins 12 & 14 -(PWM0 & Ground)_.
+ * Connect the push button on pins 5 & 6 _(SCL & Ground)_, so the click will wake it.
+ * Connect the green led and a resitor on pins 32 & 34 _(PWM0 & Ground)_.
+ * Connect the red led and the other resistor on pins 12 & 14 -(PWM0 & Ground)_.
 
 ![GPIO connectors](images/Raspberry-GPIO-Pinout.png "GPIO connectors")
 
-Add a line to call the `init.sh` file from your boot `/etc/rc.local` on raspbian lite
+### How to setup
+
+ * Get a Raspbian lite image from the [official page](https://www.raspberrypi.org/downloads/raspbian/)
+ * Burn it on the SD card: 
+ ..* on Linux/BSD -> `sudo dd bs=1M conv=noerror,sync status=progress if=<path_to_your_img/name.img> of=<path_to_mounted_SDcard>`
+ * Start the pi with screen and keybaord to configure Wifi, using the `sudo raspi-config` command
+ * Copy source code to `/home/pi/coffee-button` on the pi
+ * Copy `.env.example` to `.env` and add the webhook and token you created
+ * Add a line to call the `init.sh` file from your boot `/etc/rc.local` on raspbian lite
 
 ## Usage
 
-```
-cp .env.example .env
-Replace in .env with your webhook service 
-# TODO explain the build?
-```
+Push the button !
+Leds will flashes after a few seconds then green if the request was sent or was in the previous 48h, red if something went wrong.
 
 ## Author
 
