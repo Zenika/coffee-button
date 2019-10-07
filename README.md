@@ -31,7 +31,7 @@
  * Connect the green led and a resistor on pins 32 & 34 _(PWM0 & Ground)_.
  * Connect the red led and the other resistor on pins 12 & 14 _(PWM0 & Ground)_.
 
-![GPIO connectors](images/Raspberry-GPIO-Pinout.png "GPIO connectors")
+![Breadboard](images/breadboard_bb.png "Breadboard")
 
 ### How to setup
 
