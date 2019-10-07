@@ -36,8 +36,7 @@
 ### How to setup
 
  * Get a Raspbian lite image from the [official page](https://www.raspberrypi.org/downloads/raspbian/)
- * Burn it on the SD card: 
- ..* on Linux/BSD -> `sudo dd bs=1M conv=noerror,sync status=progress if=<path_to_your_img/name.img> of=<path_to_mounted_SDcard>`
+ * Burn it on the SD card: ex. on Linux/BSD -> `sudo dd bs=1M conv=noerror,sync status=progress if=<path_to_your_img/name.img> of=<path_to_mounted_SDcard>`
  * Start the pi with screen and keybaord to configure Wifi, using the `sudo raspi-config` command
  * Copy source code to `/home/pi/coffee-button` on the pi
  * Copy `.env.example` to `.env` and add the webhook and token you created
