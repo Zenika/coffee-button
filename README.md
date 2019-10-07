@@ -41,7 +41,7 @@
  * Copy source code to `/home/pi/coffee-button` on the pi
  * Copy `.env.example` to `.env` and add the webhook and token you created
  * Test the script on pi by running `/home/pi/coffee-button/init.sh`
- * Add a line to call the `init.sh` file from your boot `/etc/rc.local` 
+  * Add `init.sh` to the boot process : edit `/etc/rc.local` and add a line `/home/pi/coffee-button/init.sh`
  
  **Warning** :warning: _Doing this last action will prevent you to access the pi via keyboard or SSH and force you to mount the SD card on your computer again!. Be sure that everthing is in order before that or comment the last line of the `init.sh` script_
 
