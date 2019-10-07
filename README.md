@@ -29,7 +29,7 @@
 
  * Connect the push button on pins 5 & 6 _(SCL & Ground)_, so the click will wake it.
  * Connect the green led and a resitor on pins 32 & 34 _(PWM0 & Ground)_.
- * Connect the red led and the other resistor on pins 12 & 14 -(PWM0 & Ground)_.
+ * Connect the red led and the other resistor on pins 12 & 14 _(PWM0 & Ground)_.
 
 ![GPIO connectors](images/Raspberry-GPIO-Pinout.png "GPIO connectors")
 
