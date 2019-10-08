@@ -31,24 +31,24 @@
  * Connect the green led and a resistor on pins 32 & 34 _(PWM0 & Ground)_.
  * Connect the red led and the other resistor on pins 12 & 14 _(PWM0 & Ground)_.
 
-![GPIO connectors](images/Raspberry-GPIO-Pinout.png "GPIO connectors")
+![Breadboard](images/breadboard_bb.png "Breadboard")
 
 ### How to setup
 
  * Get a Raspbian lite image from the [official page](https://www.raspberrypi.org/downloads/raspbian/)
  * Burn it on the SD card: ex. on Linux/BSD -> `sudo dd bs=1M conv=noerror,sync status=progress if=<path_to_your_img/name.img> of=<path_to_mounted_SDcard>`
  * Start the pi with screen and keyboard to configure Wifi, using the `sudo raspi-config` command
- * Install git on the pi and clone the repositorty or copy source code to `/home/pi/coffee-button` on the pi
+ * Install git on the pi and clone the repository or copy source code to `/home/pi/coffee-button` on the pi
  * Make a copy of `.env.example` to `.env` and add the webhook and token you created. We used Zapier to handle the request and filter the Authorization header then send the email and Slack notification.
  * Test the script on pi by running `home/pi/coffee-button/init.sh`
- * Add a line to call the `init.sh` file from your boot `/etc/rc.local` 
+ * Add `init.sh` to the boot process : edit `/etc/rc.local` and add a line `/home/pi/coffee-button/init.sh`
  
  **Warning** :warning: _Doing this last action will prevent you to access the pi via keyboard or SSH and force you to mount the SD card on your computer again!. Be sure that everything is in order before that or comment the last line of the `init.sh` script_
 
 ## Usage
 
 Push the button !
-Leds will flashes after a few seconds then green if the request was sent or was in the previous 48h, red if something went wrong.
+Leds will flashes after a few seconds then green if the request was sent or already sent in the previous 48h, red if something went wrong.
 
 ## Author
 
