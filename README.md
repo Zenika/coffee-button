@@ -46,7 +46,7 @@
   ```
   * copy source code to `/home/pi/coffee-button` on the pi
  * Make a copy of `.env.example` to `.env` and add the webhook and token you created. We used Zapier to handle the request and filter the Authorization header then send the email and Slack notification.
- * Test the script on pi by running `home/pi/coffee-button/init.sh`
+ * Test the script on pi by running `/home/pi/coffee-button/init.sh`
  * Add `init.sh` to the boot process : edit `/etc/rc.local` and add a line `/home/pi/coffee-button/init.sh`
  
  **Warning** :warning: _Doing this last action will prevent you to access the pi via keyboard or SSH as it will shut it down immediatly after request is sent and will then force you to mount the SD card on your computer again!. Be sure that everything is in order before that or comment the last line of the `init.sh` script_
