@@ -45,7 +45,7 @@
   git clone https://github.com/Zenika/coffee-button
   ```
   * copy source code to `/home/pi/coffee-button` on the pi
- * Make a copy of `.env.example` to `.env` and add the webhook and token you created. We used Zapier to handle the request and filter the Authorization header then send the email and Slack notification.
+ * Make a copy of `.env.example` to `.env` and add the webhook and token you created. We used Zapier to handle the request and filter the Authorization header then send the email and Slack notification. You also need to set the number of days between orders (__integer required__)
  * Test the script on pi by running `/home/pi/coffee-button/init.sh`
  * Add `init.sh` to the boot process : edit `/etc/rc.local` and add a line `/home/pi/coffee-button/init.sh`
  
