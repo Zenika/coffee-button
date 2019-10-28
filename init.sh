@@ -53,6 +53,10 @@ if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE ]];then
 	fi
 else
 	echo "$(date) -- Order already placed" >> ${FILE_DIR}/logfile.log
+	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
+		-X POST \
+		"${WEBHOOK_URL}" \
+		--data "last-logs=$(tail ${FILE_DIR}/logfile.log)"
 	python ${SCRIPTPATH}/led_ok.py
 fi
 
