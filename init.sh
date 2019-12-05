@@ -25,14 +25,14 @@ source "${FILE_DIR}"/.env
 REGEXP='^[0-9]+$'
 if ! [[ $DURATION_IN_DAYS =~ $REGEXP ]] ; then
 	echo "Error: Duration in days is not a number" >> ${FILE_DIR}/logfile.log
-	#python "${SCRIPTPATH}"/led_ko.py
+	python "${SCRIPTPATH}"/led_ko.py
 	exit 1
 fi
 
 CURRENT_DATE=$(gdate +"%F-%H:%M")
 NOT_BEFORE=$(gdate -d "+$DURATION_IN_DAYS days" +"%F-%H:%M")
 
-#python "${SCRIPTPATH}"/led_boot.py
+python "${SCRIPTPATH}"/led_boot.py
 
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
@@ -46,10 +46,10 @@ if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE && $DRY_RUN != "true
 		echo "$NOT_BEFORE" > ${FILE_DIR}/next-orders.cb
 		echo "$CURRENT_DATE" > ${FILE_DIR}/sent-orders.cb
 		printf "%s -- Command sent\n" "$(gdate)"  >> ${FILE_DIR}/logfile.log
-		#python "${SCRIPTPATH}"/led_ok.py
+		python "${SCRIPTPATH}"/led_ok.py
 	else
 		echo "$(gdate) -- Something went wrong!" >> ${FILE_DIR}/logfile.log
-		#python "${SCRIPTPATH}"/led_ko.py
+		python "${SCRIPTPATH}"/led_ko.py
 	fi
 else
 	echo "$(gdate) -- Order already placed on $(cat ${FILE_DIR}/sent-orders.cb) - not before $(cat ${FILE_DIR}/next-orders.cb)" >> ${FILE_DIR}/logfile.log
@@ -57,11 +57,14 @@ else
 		-X POST \
 		"${WEBHOOK_URL}" \
 		--data "dry-run=$DRY_RUN last-logs=$(tail ${FILE_DIR}/logfile.log)"
-	#python "${SCRIPTPATH}"/led_ok.py
+	python "${SCRIPTPATH}"/led_ok.py
 fi
+
+# update sources to stay up to date
+git pull origin master
 
 if [[ $KEEP_RUNNING != "true" ]]; then
   echo "Power OFF!"
-#sudo poweroff
+sudo poweroff
 fi
 
