@@ -60,5 +60,8 @@ else
 	#python "${SCRIPTPATH}"/led_ok.py
 fi
 
+if [[ $KEEP_RUNNING != "true" ]]; then
+  echo "Power OFF!"
 #sudo poweroff
+fi
 
