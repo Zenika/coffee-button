@@ -37,7 +37,7 @@ NOT_BEFORE=$(gdate -d "+$DURATION_IN_DAYS days" +"%F-%H:%M")
 echo "Current date and time is : ${CURRENT_DATE}"
 echo "Don't order before: ${NOT_BEFORE}"
 
-if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE ]];then
+if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE && $DRY_RUN != "true" ]];then
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
 		-X POST \
 		"${WEBHOOK_URL}" \
@@ -56,7 +56,7 @@ else
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
 		-X POST \
 		"${WEBHOOK_URL}" \
-		--data "last-logs=$(tail ${FILE_DIR}/logfile.log)"
+		--data "dry-run=$DRY_RUN last-logs=$(tail ${FILE_DIR}/logfile.log)"
 	#python "${SCRIPTPATH}"/led_ok.py
 fi
 
