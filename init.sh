@@ -61,10 +61,12 @@ else
 fi
 
 # update sources to stay up to date
-git pull origin master
+if [[ $DRY_RUN == "true" ]]; then
+  git pull origin master
+fi
 
 if [[ $KEEP_RUNNING != "true" ]]; then
   echo "Power OFF!"
-sudo poweroff
+  sudo poweroff
 fi
 
