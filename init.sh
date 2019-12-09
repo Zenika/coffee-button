@@ -29,8 +29,8 @@ if ! [[ $DURATION_IN_DAYS =~ $REGEXP ]] ; then
 	exit 1
 fi
 
-CURRENT_DATE=$(gdate +"%F-%H:%M")
-NOT_BEFORE=$(gdate -d "+$DURATION_IN_DAYS days" +"%F-%H:%M")
+CURRENT_DATE=$(date +"%F-%H:%M")
+NOT_BEFORE=$(date -d "+$DURATION_IN_DAYS days" +"%F-%H:%M")
 
 python "${SCRIPTPATH}"/led_boot.py
 
@@ -45,14 +45,14 @@ if [[ $(tail -1 ${FILE_DIR}/next-orders.cb) < $CURRENT_DATE && $DRY_RUN != "true
 	if [[ $? == 0 ]];then
 		echo "$NOT_BEFORE" > ${FILE_DIR}/next-orders.cb
 		echo "$CURRENT_DATE" > ${FILE_DIR}/sent-orders.cb
-		printf "%s -- Command sent\n" "$(gdate)"  >> ${FILE_DIR}/logfile.log
+		printf "%s -- Command sent\n" "$(date)"  >> ${FILE_DIR}/logfile.log
 		python "${SCRIPTPATH}"/led_ok.py
 	else
-		echo "$(gdate) -- Something went wrong!" >> ${FILE_DIR}/logfile.log
+		echo "$(date) -- Something went wrong!" >> ${FILE_DIR}/logfile.log
 		python "${SCRIPTPATH}"/led_ko.py
 	fi
 else
-	echo "$(gdate) -- Order already placed on $(cat ${FILE_DIR}/sent-orders.cb) - not before $(cat ${FILE_DIR}/next-orders.cb)" >> ${FILE_DIR}/logfile.log
+	echo "$(date) -- Order already placed on $(cat ${FILE_DIR}/sent-orders.cb) - not before $(cat ${FILE_DIR}/next-orders.cb)" >> ${FILE_DIR}/logfile.log
 	curl -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
 		-X POST \
 		"${WEBHOOK_URL}" \
