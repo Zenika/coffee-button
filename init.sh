@@ -62,7 +62,7 @@ fi
 
 # update sources to stay up to date
 if [[ $DRY_RUN == "true" ]]; then
-  sed 's/DRY_RUN=true/DRY_RUN=false/g' "${SCRIPTPATH}"/.env
+  sed -i 's/DRY_RUN=true/DRY_RUN=false/g' "${SCRIPTPATH}"/.env
   git pull origin master
 fi
 
