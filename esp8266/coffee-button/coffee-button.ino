@@ -5,21 +5,17 @@
 
 // edit the SSID & password to match your local network
 const char* ssid = "<insert_ssid_here>"; 
-const char* password = "<insert_pwd_here>"; 
+const char* password = "<insert_pwd_here>";
 const char* host = "hooks.zapier.com"; // edit the host adress, ip address etc. 
-String url = "<insert_hook_url>"; // edit the hook url
+String url = "<insert_hook_url>"; // edit the hook url 
 const int httpsPort = 443;
 // SHA1 fingerprint of the certificate
 // if you use another provider, be sure to change the fingerprint
 const char fingerprint[] PROGMEM = "AF 21 4A 6C 2C E4 CE 6E 99 7B B8 EA 58 CF 57 6B C2 35 A4 0D";
-int adcvalue=0;
-int value = 0;
 int ledOff = LOW;
 int ledOn = HIGH;
 int greenLed = 2;
 int redLed = 13;
-
-// OneButton button(D6, true);
 
 void setup() {
   // Initializing LEDs
@@ -28,13 +24,10 @@ void setup() {
   digitalWrite(greenLed, ledOff);
   digitalWrite(redLed, ledOff);
 
-  // button.attachClick(handleclick);
-  
   // Initializing Wifi-connection
   Serial.begin(115200); 
-  delay(10); // We start by connecting to a WiFi network 
-  Serial.println(); 
-  Serial.println(); Serial.print("Connecting to "); 
+  // We start by connecting to a WiFi network 
+  Serial.print("Connecting to "); 
   Serial.println(ssid); 
   /* Explicitly set the ESP8266 to be a WiFi-client, otherwise, it by default,
     would try to act as both a client and an access-point and could cause 
@@ -50,7 +43,7 @@ void setup() {
   Serial.println("IP address: "); 
   Serial.println(WiFi.localIP());
   // Connecting to host
-  WiFiClientSecure httpsClient;    //Declare object of class WiFiClient
+  WiFiClientSecure httpsClient;    //Declare object of class WiFiClientSecure
  
   Serial.println(host);
  
@@ -132,9 +125,7 @@ void blinkLeds() {
 }
 
 void handleclick() {
-  static int m = LOW;
-  m = !m;
-  digitalWrite(greenLed, m);
+  blinkLeds();
 }
 
 void loop() {
