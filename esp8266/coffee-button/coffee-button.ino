@@ -4,7 +4,7 @@
 #include <WiFiClientSecure.h>
 
 // edit the SSID & password to match your local network
-const char* ssid = "<insert_ssid_here>"; 
+const char* ssid = "<insert_ssid_here>";
 const char* password = "<insert_pwd_here>";
 const char* host = "hooks.zapier.com"; // edit the host adress, ip address etc. 
 String url = "<insert_hook_url>"; // edit the hook url 
@@ -25,25 +25,25 @@ void setup() {
   digitalWrite(redLed, ledOff);
 
   // Initializing Wifi-connection
-  Serial.begin(115200); 
+  Serial.begin(115200);
   // We start by connecting to a WiFi network 
-  Serial.print("Connecting to "); 
-  Serial.println(ssid); 
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
   /* Explicitly set the ESP8266 to be a WiFi-client, otherwise, it by default,
     would try to act as both a client and an access-point and could cause 
     network-issues with your other WiFi-devices on your WiFi-network. */ 
-  WiFi.mode(WIFI_STA); 
-  WiFi.begin(ssid, password); 
-  while (WiFi.status() != WL_CONNECTED) { 
-    delay(500); 
-    Serial.print("."); 
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
   } 
-  Serial.println(""); 
-  Serial.println("WiFi connected"); 
-  Serial.println("IP address: "); 
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   // Connecting to host
-  WiFiClientSecure httpsClient;    //Declare object of class WiFiClientSecure
+  WiFiClientSecure httpsClient; //Declare object of class WiFiClientSecure
  
   Serial.println(host);
  
@@ -89,14 +89,14 @@ void setup() {
   Serial.println("reply was:");
   Serial.println("==========");
   String line;
-  while(httpsClient.available()){        
+  while(httpsClient.available()){
     line = httpsClient.readStringUntil('\n');  //Read Line by Line
     Serial.println(line); //Print response
   }
   Serial.println("==========");
   Serial.println("closing connection");
     
-} 
+}
 
 void okLed() {
   digitalWrite(greenLed, ledOn);
@@ -121,7 +121,7 @@ void blinkLeds() {
     delay(125);
   }
   digitalWrite(greenLed, ledOff);
-  digitalWrite(redLed, ledOff);  
+  digitalWrite(redLed, ledOff);
 }
 
 void handleclick() {
@@ -130,4 +130,4 @@ void handleclick() {
 
 void loop() {
   
-} 
+}
