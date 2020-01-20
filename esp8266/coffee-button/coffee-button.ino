@@ -17,12 +17,16 @@ int ledOn = HIGH;
 int greenLed = 2;
 int redLed = 13;
 
+OneButton button(D6, true);
+
 void setup() {
   // Initializing LEDs
   pinMode(greenLed, OUTPUT);
   pinMode(redLed, OUTPUT);
   digitalWrite(greenLed, ledOff);
   digitalWrite(redLed, ledOff);
+
+  button.attachClick(blinkLeds);
 
   // Initializing Wifi-connection
   Serial.begin(115200);
@@ -42,7 +46,7 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-  // Connecting to host
+  // Setting up connexion to host
   WiFiClientSecure httpsClient; //Declare object of class WiFiClientSecure
  
   Serial.println(host);
@@ -51,6 +55,11 @@ void setup() {
   httpsClient.setFingerprint(fingerprint);
   httpsClient.setTimeout(15000); // 15 Seconds
   delay(1000);
+  connectAndSendRequest(httpsClient);
+}
+
+void connectAndSendRequest(WiFiClientSecure httpsClient) {
+  // Connecting to host and send request
   Serial.print("HTTPS Connecting");
   int r=0; //retry counter
   while((!httpsClient.connect(host, httpsPort)) && (r < 30)){
@@ -59,16 +68,18 @@ void setup() {
       r++;
   }
   if(r==30) {
+    koLed();
     Serial.println("Connection failed");
   }
   else {
-    Serial.println("Connected to web");
+    Serial.println("Connected to host");
   }
   String address = host + url;
-  //GET Data
+  //POST Data
   Serial.print("Requesting URL: ");
   Serial.println(address);
- 
+  blinkLeds();
+
   httpsClient.print(String("POST ") + url + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Content-Type: application/x-www-form-urlencoded" + "\r\n" +
@@ -92,10 +103,16 @@ void setup() {
   while(httpsClient.available()){
     line = httpsClient.readStringUntil('\n');  //Read Line by Line
     Serial.println(line); //Print response
+    if (line.startsWith("{\"status\": \"success\"")) {
+      Serial.println("Victory!");
+      okLed();
+    } else {
+      Serial.println("Something went wrong!");
+      koLed();
+    }
   }
   Serial.println("==========");
   Serial.println("closing connection");
-    
 }
 
 void okLed() {
@@ -129,5 +146,6 @@ void handleclick() {
 }
 
 void loop() {
-  
+  button.tick();
+  delay(10);
 }
