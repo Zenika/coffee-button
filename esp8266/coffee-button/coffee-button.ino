@@ -18,47 +18,9 @@ int greenLed = 2;
 int redLed = 13;
 
 OneButton button(D6, true);
+WiFiClientSecure httpsClient;
 
-void setup() {
-  // Initializing LEDs
-  pinMode(greenLed, OUTPUT);
-  pinMode(redLed, OUTPUT);
-  digitalWrite(greenLed, ledOff);
-  digitalWrite(redLed, ledOff);
-
-  button.attachClick(blinkLeds);
-
-  // Initializing Wifi-connection
-  Serial.begin(115200);
-  // We start by connecting to a WiFi network 
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  /* Explicitly set the ESP8266 to be a WiFi-client, otherwise, it by default,
-    would try to act as both a client and an access-point and could cause 
-    network-issues with your other WiFi-devices on your WiFi-network. */ 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  } 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-  // Setting up connexion to host
-  WiFiClientSecure httpsClient; //Declare object of class WiFiClientSecure
- 
-  Serial.println(host);
- 
-  Serial.printf("Using fingerprint '%s'\n", fingerprint);
-  httpsClient.setFingerprint(fingerprint);
-  httpsClient.setTimeout(15000); // 15 Seconds
-  delay(1000);
-  connectAndSendRequest(httpsClient);
-}
-
-void connectAndSendRequest(WiFiClientSecure httpsClient) {
+void connectAndSendRequest() {
   // Connecting to host and send request
   Serial.print("HTTPS Connecting");
   int r=0; //retry counter
@@ -115,6 +77,43 @@ void connectAndSendRequest(WiFiClientSecure httpsClient) {
   Serial.println("closing connection");
 }
 
+void setup() {
+  // Initializing LEDs
+  pinMode(greenLed, OUTPUT);
+  pinMode(redLed, OUTPUT);
+  digitalWrite(greenLed, ledOff);
+  digitalWrite(redLed, ledOff);
+
+  button.attachClick(connectAndSendRequest);
+
+  // Initializing Wifi-connection
+  Serial.begin(115200);
+  // We start by connecting to a WiFi network 
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  /* Explicitly set the ESP8266 to be a WiFi-client, otherwise, it by default,
+    would try to act as both a client and an access-point and could cause 
+    network-issues with your other WiFi-devices on your WiFi-network. */ 
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  } 
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  // Setting up connexion to host
+ 
+  Serial.println(host);
+ 
+  Serial.printf("Using fingerprint '%s'\n", fingerprint);
+  httpsClient.setFingerprint(fingerprint);
+  httpsClient.setTimeout(15000); // 15 Seconds
+  flashLed(greenLed);
+}
+
 void okLed() {
   digitalWrite(greenLed, ledOn);
   delay(3000);
@@ -125,6 +124,20 @@ void koLed() {
   digitalWrite(redLed, ledOn);
   delay(3000);
   digitalWrite(redLed, ledOff);
+}
+
+void flashLed(int led) {
+  digitalWrite(led, ledOn);
+  delay(250);
+  digitalWrite(led, ledOff);
+  delay(250);
+  digitalWrite(led, ledOn);
+  delay(250);
+  digitalWrite(led, ledOff);
+  delay(250);
+  digitalWrite(led, ledOn);
+  delay(250);
+  digitalWrite(led, ledOff);
 }
 
 void blinkLeds() {
@@ -139,10 +152,6 @@ void blinkLeds() {
   }
   digitalWrite(greenLed, ledOff);
   digitalWrite(redLed, ledOff);
-}
-
-void handleclick() {
-  blinkLeds();
 }
 
 void loop() {
