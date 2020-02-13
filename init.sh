@@ -7,6 +7,9 @@
 # - it then needs to shutdown the device
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+# Update datetime on startup
+sudo ntpdate fr.pool.ntp.org
+
 # Files and directory check and/or creation
 [[ -d /etc/coffee-button ]] && echo "Directory exists" \
 	|| (mkdir -p /etc/coffee-button && echo "Directory created")
