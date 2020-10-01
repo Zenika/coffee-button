@@ -55,7 +55,7 @@
 ## Usage
 
 Push the button !
-Leds will flashes after a few seconds then green if the request was sent or already sent in the previous 48h, red if something went wrong.
+Leds will flashes after a few seconds (if nothing happens don't panic and wait longer) then green if the request was sent or already sent in the previous 48h, red if something went wrong.
 
 ## Author
 
